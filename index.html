@@ -1,0 +1,1309 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>汝禾姐·30天践行营 联动记录版</title>
+  <style>
+    :root {
+      --bg: #eef3f8;
+      --paper: rgba(255, 255, 255, 0.96);
+      --ink: #152231;
+      --muted: #627284;
+      --line: rgba(21, 34, 49, 0.10);
+      --green: #4da768;
+      --green-soft: #eef8f1;
+      --blue: #2f73e2;
+      --blue-soft: #edf4ff;
+      --orange: #dd882b;
+      --orange-soft: #fff3e7;
+      --shadow: 0 26px 80px rgba(31, 46, 67, 0.14);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      font-family: "Noto Serif SC", "Source Han Serif SC", "PingFang SC", "Microsoft YaHei", serif;
+      background:
+        radial-gradient(circle at 12% 16%, rgba(77, 167, 104, 0.14), transparent 22%),
+        radial-gradient(circle at 85% 18%, rgba(47, 115, 226, 0.12), transparent 24%),
+        radial-gradient(circle at 52% 84%, rgba(221, 136, 43, 0.10), transparent 26%),
+        linear-gradient(180deg, #f6f9fc 0%, #eaf0f6 100%);
+    }
+
+    .canvas {
+      width: 1600px;
+      margin: 0 auto;
+      padding: 48px;
+    }
+
+    .sheet {
+      position: relative;
+      overflow: hidden;
+      border-radius: 40px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(248,251,255,0.98));
+      border: 1px solid rgba(40, 58, 79, 0.08);
+      box-shadow: var(--shadow);
+      padding: 40px 44px 34px;
+    }
+
+    .sheet::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image:
+        linear-gradient(rgba(59, 81, 109, 0.035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 81, 109, 0.035) 1px, transparent 1px);
+      background-size: 40px 40px;
+      pointer-events: none;
+    }
+
+    .layer {
+      position: relative;
+      z-index: 1;
+    }
+
+    .topbar {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 20px;
+      align-items: start;
+      margin-bottom: 24px;
+    }
+
+    .brand {
+      max-width: 860px;
+    }
+
+    .kicker {
+      display: inline-block;
+      padding: 8px 16px;
+      border-radius: 999px;
+      background: rgba(47, 115, 226, 0.08);
+      color: #2e67c8;
+      font-size: 15px;
+      font-weight: 700;
+      letter-spacing: 0.10em;
+      margin-bottom: 12px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 58px;
+      line-height: 1.04;
+      letter-spacing: -0.04em;
+    }
+
+    .sub {
+      margin: 14px 0 0;
+      color: var(--muted);
+      font-size: 22px;
+      line-height: 1.65;
+    }
+
+    .brand-mark {
+      justify-self: end;
+      align-self: start;
+      width: 380px;
+      border-radius: 28px;
+      padding: 22px 24px;
+      background: linear-gradient(135deg, rgba(255,255,255,0.98), rgba(242,248,255,0.98));
+      border: 1px solid rgba(47, 115, 226, 0.14);
+      box-shadow: 0 14px 30px rgba(35, 52, 74, 0.08);
+      display: grid;
+      gap: 16px;
+    }
+
+    .brand-mark-top {
+      display: grid;
+      grid-template-columns: 78px 1fr;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .brand-mark-icon {
+      width: 78px;
+      height: 78px;
+      border-radius: 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(180deg, #fff7ed, #eef6ff);
+      border: 1px solid rgba(47, 115, 226, 0.12);
+    }
+
+    .brand-mark-name {
+      margin: 0 0 6px;
+      font-size: 30px;
+      line-height: 1.05;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: #1a2837;
+    }
+
+    .brand-mark-sub {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.7;
+      color: #617180;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .brand-mark-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .brand-tag {
+      padding: 7px 12px;
+      border-radius: 999px;
+      background: rgba(47, 115, 226, 0.08);
+      color: #2f67c5;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.04em;
+    }
+
+    .grid {
+      display: grid;
+      gap: 22px;
+    }
+
+    .record-layout {
+      grid-template-columns: 0.95fr 1.05fr;
+      align-items: start;
+    }
+
+    .single-page-layout {
+      display: grid;
+      gap: 22px;
+    }
+
+    .card {
+      border-radius: 28px;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      box-shadow: 0 14px 36px rgba(35, 52, 74, 0.08);
+      padding: 24px 26px;
+    }
+
+    .title {
+      margin: 0 0 10px;
+      font-size: 30px;
+      line-height: 1.2;
+    }
+
+    .small {
+      margin: 0;
+      color: #526170;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .flywheel-wrap {
+      display: grid;
+      gap: 18px;
+      height: 100%;
+    }
+
+    .tips {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+
+    .tip-box {
+      border-radius: 20px;
+      padding: 16px 18px;
+      background: #fbfdff;
+      border: 1px solid var(--line);
+    }
+
+    .tip-box strong {
+      display: block;
+      font-size: 18px;
+      margin-bottom: 6px;
+    }
+
+    .tip-box span {
+      font-size: 15px;
+      line-height: 1.65;
+      color: #607080;
+    }
+
+    .name-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      margin-top: 12px;
+    }
+
+    .name-input {
+      width: 100%;
+      border: 1px solid rgba(21, 34, 49, 0.14);
+      background: #fff;
+      border-radius: 18px;
+      padding: 16px 18px;
+      font: inherit;
+      font-size: 19px;
+      color: var(--ink);
+      outline: none;
+    }
+
+    .name-input:focus {
+      border-color: rgba(47, 115, 226, 0.42);
+      box-shadow: 0 0 0 4px rgba(47, 115, 226, 0.08);
+    }
+
+    .main-btn {
+      appearance: none;
+      border: 0;
+      background: #1d2a38;
+      color: #fff;
+      border-radius: 18px;
+      padding: 0 22px;
+      font: inherit;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      min-width: 148px;
+    }
+
+    .status-grid {
+      display: grid;
+      grid-template-columns: 1.15fr 0.85fr;
+      gap: 14px;
+      margin-top: 14px;
+    }
+
+    .status-card {
+      border-radius: 22px;
+      padding: 20px;
+      border: 1px solid rgba(47, 115, 226, 0.14);
+      background: linear-gradient(180deg, #f7fbff, #edf4ff);
+    }
+
+    .status-label {
+      display: block;
+      color: #5c6a79;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+
+    .status-day {
+      font-size: 42px;
+      line-height: 1;
+      font-weight: 800;
+      margin-bottom: 8px;
+    }
+
+    .status-desc {
+      font-size: 17px;
+      line-height: 1.65;
+      color: #546475;
+    }
+
+    .score-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-top: 14px;
+    }
+
+    .score-box {
+      border-radius: 20px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      background: #fcfdff;
+    }
+
+    .score-box .num {
+      font-size: 38px;
+      line-height: 1;
+      font-weight: 800;
+      margin-bottom: 6px;
+    }
+
+    .score-box .txt {
+      font-size: 15px;
+      line-height: 1.6;
+      color: #5e6c7b;
+    }
+
+    .button-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 14px;
+      margin-top: 18px;
+    }
+
+    .task-btn {
+      appearance: none;
+      border: 1px solid var(--line);
+      background: #fff;
+      border-radius: 22px;
+      padding: 18px 16px;
+      min-height: 124px;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      transition: all .18s ease;
+    }
+
+    .task-btn:disabled {
+      cursor: not-allowed;
+      opacity: 0.52;
+    }
+
+    .task-btn:not(:disabled):hover {
+      transform: translateY(-1px);
+      box-shadow: 0 10px 24px rgba(42, 58, 79, 0.08);
+    }
+
+    .task-btn.active {
+      color: #fff;
+      border-color: transparent;
+      box-shadow: 0 12px 26px rgba(42, 58, 79, 0.12);
+    }
+
+    .task-btn.write.active { background: linear-gradient(180deg, #56b36b, #429a56); }
+    .task-btn.shoot.active { background: linear-gradient(180deg, #4a8fff, #2f73e2); }
+    .task-btn.review.active { background: linear-gradient(180deg, #ef9842, #d77d22); }
+
+    .task-btn strong {
+      display: block;
+      font-size: 23px;
+      margin-bottom: 8px;
+    }
+
+    .task-btn span {
+      display: block;
+      font-size: 15px;
+      line-height: 1.65;
+      color: inherit;
+      opacity: 0.94;
+    }
+
+    .hint {
+      margin-top: 14px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: linear-gradient(90deg, rgba(77,167,104,0.10), rgba(47,115,226,0.08), rgba(221,136,43,0.10));
+      border: 1px solid rgba(21, 34, 49, 0.08);
+      font-size: 18px;
+      line-height: 1.7;
+      color: #44515f;
+      min-height: 84px;
+    }
+
+    .progress-line {
+      position: relative;
+      height: 18px;
+      border-radius: 999px;
+      background: #e8edf4;
+      overflow: hidden;
+      border: 1px solid rgba(21, 34, 49, 0.06);
+      margin-top: 16px;
+    }
+
+    .progress-fill {
+      position: absolute;
+      inset: 0 auto 0 0;
+      width: 0%;
+      border-radius: 999px;
+      background: linear-gradient(90deg, #56b36b 0%, #367cf0 50%, #ea8b30 100%);
+      box-shadow: 0 0 16px rgba(54, 124, 240, 0.18);
+    }
+
+    .day-cells {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 10px;
+      margin-top: 18px;
+    }
+
+    .day-cell {
+      min-height: 72px;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      background: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 10px 8px;
+    }
+
+    .day-cell.done {
+      background: linear-gradient(180deg, #f1fbf3, #e6f6ea);
+      border-color: rgba(77, 167, 104, 0.28);
+    }
+
+    .day-cell.current {
+      background: linear-gradient(180deg, #f4f8ff, #e9f0ff);
+      border-color: rgba(47, 115, 226, 0.28);
+    }
+
+    .day-cell .d {
+      font-size: 14px;
+      font-weight: 700;
+      color: #5e6d7d;
+      margin-bottom: 4px;
+    }
+
+    .day-cell .s {
+      font-size: 13px;
+      color: #778594;
+    }
+
+    .footer-note {
+      margin-top: 22px;
+      border-radius: 24px;
+      padding: 18px 22px;
+      background: linear-gradient(90deg, rgba(77,167,104,0.12), rgba(47,115,226,0.10), rgba(221,136,43,0.12));
+      border: 1px solid rgba(21, 34, 49, 0.08);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+    }
+
+    .footer-note p {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.7;
+    }
+
+    .badge {
+      border-radius: 999px;
+      background: #1d2a38;
+      color: #fff;
+      padding: 12px 16px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+
+    .summary-row {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-bottom: 18px;
+    }
+
+    .summary-box {
+      border-radius: 22px;
+      padding: 18px 20px;
+      background: #fbfdff;
+      border: 1px solid var(--line);
+    }
+
+    .summary-box .num {
+      font-size: 34px;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .summary-box .txt {
+      font-size: 15px;
+      line-height: 1.65;
+      color: #607080;
+    }
+
+    .legend {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      color: #5b6978;
+      font-size: 16px;
+    }
+
+    .legend-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .legend-box {
+      width: 18px;
+      height: 18px;
+      border-radius: 6px;
+      border: 1px solid rgba(21, 34, 49, 0.10);
+      background: #fff;
+    }
+
+    .legend-box.done {
+      background: #2b5cbb;
+      border-color: #2b5cbb;
+    }
+
+    .legend-box.empty {
+      background: #fff;
+    }
+
+    .table-wrap {
+      margin-top: 18px;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid var(--line);
+      background: rgba(255,255,255,0.84);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      table-layout: fixed;
+    }
+
+    thead th {
+      background: #f5f8fc;
+      color: #324355;
+      font-size: 14px;
+      padding: 14px 10px;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      z-index: 1;
+    }
+
+    tbody td {
+      padding: 12px 10px;
+      border-bottom: 1px solid rgba(21,34,49,0.06);
+      font-size: 15px;
+      text-align: center;
+      color: #364555;
+      background: rgba(255,255,255,0.88);
+    }
+
+    tbody tr:nth-child(even) td {
+      background: rgba(249, 251, 255, 0.92);
+    }
+
+    td.name-cell {
+      text-align: left;
+      font-weight: 700;
+      color: #1a2938;
+      padding-left: 16px;
+      width: 160px;
+    }
+
+    td.count-cell {
+      width: 116px;
+      font-weight: 700;
+    }
+
+    .table-day {
+      width: 28px;
+      height: 28px;
+      margin: 0 auto;
+      border-radius: 8px;
+      border: 1px solid rgba(21, 34, 49, 0.08);
+      background: #fff;
+    }
+
+    .table-day.done {
+      background: #2f73e2;
+      border-color: #2f73e2;
+      box-shadow: inset 0 0 0 1px rgba(255,255,255,0.18);
+    }
+
+    .empty-state {
+      padding: 34px 24px;
+      text-align: center;
+      color: #647384;
+      font-size: 18px;
+      line-height: 1.7;
+      background: rgba(255,255,255,0.88);
+    }
+
+    .table-card {
+      padding-top: 22px;
+    }
+
+    .quote-inline {
+      display: grid;
+      grid-template-columns: 64px 1fr;
+      gap: 14px;
+      align-items: start;
+      margin-top: auto;
+      padding: 18px 20px;
+      border-radius: 22px;
+      background: linear-gradient(135deg, rgba(255,251,245,0.96), rgba(247,250,255,0.96));
+      border: 1px solid rgba(221, 136, 43, 0.14);
+    }
+
+    .quote-mark {
+      width: 64px;
+      height: 64px;
+      border-radius: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+      line-height: 1;
+      color: #d98b31;
+      background: linear-gradient(180deg, #fff8ef, #fff1df);
+      border: 1px solid rgba(221, 136, 43, 0.18);
+    }
+
+    .quote-title {
+      margin: 0 0 8px;
+      font-size: 16px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      color: #b07025;
+    }
+
+    .quote-text {
+      margin: 0;
+      font-size: 18px;
+      line-height: 1.9;
+      color: #1f2e3c;
+    }
+
+  </style>
+</head>
+<body>
+  <main class="canvas">
+    <section class="sheet">
+      <div class="layer">
+        <header class="topbar">
+          <div class="brand">
+            <span class="kicker">PRACTICE CAMP LINKED BOARD</span>
+            <h1>汝禾姐·30天践行营<br />个人记录板 + 总体记录总表</h1>
+            <p class="sub">
+              这是一套联动记录板。第一页给学员自己用，围绕一件最重要的小事去做事、复盘、写、拍。第二页给你和管理员看，只要学员完成一次，当天对应格子就会同步变成深颜色。
+            </p>
+          </div>
+          <div class="brand-mark">
+            <div class="brand-mark-top">
+              <div class="brand-mark-icon" aria-hidden="true">
+                <svg width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg">
+                  <defs>
+                    <linearGradient id="logoGradA" x1="0" y1="0" x2="1" y2="1">
+                      <stop offset="0%" stop-color="#4da768"/>
+                      <stop offset="55%" stop-color="#2f73e2"/>
+                      <stop offset="100%" stop-color="#dd882b"/>
+                    </linearGradient>
+                  </defs>
+                  <circle cx="27" cy="27" r="22" fill="none" stroke="url(#logoGradA)" stroke-width="4.2" stroke-dasharray="92 42"/>
+                  <path d="M27 10 A17 17 0 0 1 43 28" fill="none" stroke="#dd882b" stroke-width="4.2" stroke-linecap="round"/>
+                  <path d="M18 34 C18 27, 23 22, 27 20 C31 22, 36 27, 36 34" fill="none" stroke="#2f73e2" stroke-width="3.6" stroke-linecap="round"/>
+                  <path d="M27 19 L27 37" stroke="#4da768" stroke-width="3.4" stroke-linecap="round"/>
+                  <path d="M27 24 C22 22, 19 18, 18 14 C22 14, 26 16, 27 21" fill="#7dc78f"/>
+                  <path d="M27 24 C32 22, 35 18, 36 14 C32 14, 28 16, 27 21" fill="#a8d7b4"/>
+                </svg>
+              </div>
+              <div>
+                <p class="brand-mark-name">汝禾姐</p>
+                <p class="brand-mark-sub">Growth Flywheel Practice Camp</p>
+              </div>
+            </div>
+            <div class="brand-mark-tags">
+              <span class="brand-tag">成长飞轮</span>
+              <span class="brand-tag">每日记录</span>
+              <span class="brand-tag">从小事开始</span>
+            </div>
+          </div>
+        </header>
+
+        <section class="single-page-layout">
+          <div class="grid record-layout">
+            <article class="card flywheel-wrap">
+              <div>
+                <h2 class="title">30天飞轮</h2>
+                <p class="small">中心不是做很多件事，而是先找到一件最重要的小事。每天围绕它循环：做事 → 复盘 → 写 → 拍 → 再回到做事。只有这样，30天才会像一个整体飞轮一样运转起来。</p>
+              </div>
+
+              <svg width="100%" viewBox="0 0 720 720" xmlns="http://www.w3.org/2000/svg" aria-label="30天飞轮图">
+                <defs>
+                  <path id="circlePathRecord" d="M360,360 m-292,0 a292,292 0 1,1 584,0 a292,292 0 1,1 -584,0" />
+                  <marker id="arrowGreen" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+                    <path d="M0,0 L14,7 L0,14 Z" fill="#4da768"/>
+                  </marker>
+                  <marker id="arrowBlue" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+                    <path d="M0,0 L14,7 L0,14 Z" fill="#2f73e2"/>
+                  </marker>
+                  <marker id="arrowOrange" markerWidth="14" markerHeight="14" refX="12" refY="7" orient="auto">
+                    <path d="M0,0 L14,7 L0,14 Z" fill="#dd882b"/>
+                  </marker>
+                </defs>
+
+                <circle cx="360" cy="360" r="320" fill="#fff" stroke="#dae5f0" stroke-width="2"/>
+                <text font-size="30" font-weight="700" fill="#1a2430">
+                  <textPath href="#circlePathRecord" startOffset="10%">30天是一个整体飞轮：每天都要转，才会持续向前</textPath>
+                </text>
+
+                <circle cx="360" cy="360" r="252" fill="#ffffff" stroke="#e3ebf4" stroke-width="2"/>
+
+                <path d="M360 108 A252 252 0 0 1 578 485" fill="none" stroke="#4da768" stroke-width="22" stroke-linecap="round"/>
+                <path d="M578 485 A252 252 0 0 1 142 485" fill="none" stroke="#2f73e2" stroke-width="22" stroke-linecap="round"/>
+                <path d="M142 485 A252 252 0 0 1 360 108" fill="none" stroke="#dd882b" stroke-width="22" stroke-linecap="round"/>
+
+                <path d="M360 108 A252 252 0 0 1 578 485" fill="none" stroke="#4da768" stroke-width="6" marker-end="url(#arrowGreen)"/>
+                <path d="M578 485 A252 252 0 0 1 142 485" fill="none" stroke="#2f73e2" stroke-width="6" marker-end="url(#arrowBlue)"/>
+                <path d="M142 485 A252 252 0 0 1 360 108" fill="none" stroke="#dd882b" stroke-width="6" marker-end="url(#arrowOrange)"/>
+
+                <path d="M360 360 L360 130" stroke="#c0cfde" stroke-width="3"/>
+                <path d="M360 360 L548 468" stroke="#c0cfde" stroke-width="3"/>
+                <path d="M360 360 L172 468" stroke="#c0cfde" stroke-width="3"/>
+
+                <circle cx="360" cy="360" r="96" fill="#fff" stroke="#d9e4ef" stroke-width="2"/>
+                <text x="360" y="326" text-anchor="middle" font-size="20" font-weight="700" fill="#47576a">先找到</text>
+                <text x="360" y="364" text-anchor="middle" font-size="34" font-weight="800" fill="#243140">一件小事</text>
+                <text x="360" y="402" text-anchor="middle" font-size="17" fill="#647386">每天围绕它去推进</text>
+
+                <g font-size="20" font-weight="700" fill="#4e5d6d">
+                  <text x="360" y="122" text-anchor="middle">做事</text>
+                  <text x="596" y="364" text-anchor="middle">复盘</text>
+                  <text x="360" y="612" text-anchor="middle">写</text>
+                  <text x="124" y="364" text-anchor="middle">拍</text>
+                </g>
+
+                <g transform="translate(238 236)">
+                  <circle cx="0" cy="0" r="74" fill="#f3fbf5" stroke="#d6eddc" stroke-width="2"/>
+                  <text x="0" y="-22" text-anchor="middle" font-size="22" font-weight="700" fill="#305e3c">1-10天</text>
+                  <text x="0" y="10" text-anchor="middle" font-size="30" font-weight="800" fill="#224029">习惯飞轮</text>
+                  <text x="0" y="44" text-anchor="middle" font-size="17" fill="#4e6b56">先把动作做稳</text>
+                </g>
+
+                <g transform="translate(482 236)">
+                  <circle cx="0" cy="0" r="74" fill="#eff5ff" stroke="#d7e4fc" stroke-width="2"/>
+                  <text x="0" y="-22" text-anchor="middle" font-size="22" font-weight="700" fill="#27477d">11-20天</text>
+                  <text x="0" y="10" text-anchor="middle" font-size="30" font-weight="800" fill="#1b3560">AI飞轮</text>
+                  <text x="0" y="44" text-anchor="middle" font-size="17" fill="#4a6280">让效率变快</text>
+                </g>
+
+                <g transform="translate(360 504)">
+                  <circle cx="0" cy="0" r="78" fill="#fff8f0" stroke="#f4dec3" stroke-width="2"/>
+                  <text x="0" y="-24" text-anchor="middle" font-size="22" font-weight="700" fill="#815a23">21-30天</text>
+                  <text x="0" y="10" text-anchor="middle" font-size="32" font-weight="800" fill="#5b4019">成果飞轮</text>
+                  <text x="0" y="46" text-anchor="middle" font-size="17" fill="#7c613c">让成果被看见</text>
+                </g>
+              </svg>
+
+              <div class="tips">
+                <div class="tip-box">
+                  <strong>每天做事</strong>
+                  <span>围绕那件小事，真正推进一点点。</span>
+                </div>
+                <div class="tip-box">
+                  <strong>每天留下痕迹</strong>
+                  <span>写出来、拍下来，才会形成资产。</span>
+                </div>
+                <div class="tip-box">
+                  <strong>每天复盘</strong>
+                  <span>找到信号，明天就更聚焦。</span>
+                </div>
+              </div>
+
+              <div class="quote-inline">
+                <div class="quote-mark">“</div>
+                <div>
+                  <p class="quote-title">金句提醒</p>
+                  <p class="quote-text">
+                    如果你对这个世界的理解是对的，那你的口袋里应该已经有了你想要的东西；否则，就应该停下来认真回想一下过去的生活，是不是哪里出了问题，要不要沿着之前的轨迹继续生活下去。 --姜胡说《价值心法》
+                  </p>
+                </div>
+              </div>
+            </article>
+
+            <article class="card">
+              <h2 class="title">我的打卡记录</h2>
+              <p class="small">先写上姓名，再开始打卡。只有“写点什么、拍点什么、复盘总结”这三个按钮都完成，今天才算真正完成 1 天，总表里的对应格子也会同步变深。</p>
+
+              <div class="name-row">
+                <input class="name-input" id="studentNameInput" type="text" placeholder="请填写学员姓名，例如：小雅" />
+                <button class="main-btn" id="saveNameBtn" type="button">进入我的记录</button>
+              </div>
+
+              <div class="status-grid">
+                <div class="status-card">
+                  <span class="status-label">当前进度</span>
+                  <div class="status-day" id="currentDayText">请先填写姓名</div>
+                  <div class="status-desc" id="currentDayDesc">姓名确定后，这里会显示这位学员现在进行到第几天，以及今天该做什么。</div>
+                </div>
+                <div class="status-card">
+                  <span class="status-label">当前学员</span>
+                  <div class="status-day" id="currentStudentText">未选择</div>
+                  <div class="status-desc" id="currentStudentDesc">当前没有锁定学员姓名。为了让总表能联动记录，请先填写姓名。</div>
+                </div>
+              </div>
+
+              <div class="button-grid">
+                <button class="task-btn write" id="btnWrite" type="button" disabled>
+                  <strong>每天写点什么</strong>
+                  <span>把今天围绕的小事写下来，留下文字痕迹。</span>
+                </button>
+                <button class="task-btn shoot" id="btnShoot" type="button" disabled>
+                  <strong>每天拍点什么</strong>
+                  <span>把行动过程记录下来，让成长看得见。</span>
+                </button>
+                <button class="task-btn review" id="btnReview" type="button" disabled>
+                  <strong>每天复盘总结</strong>
+                  <span>把今天的经验提炼出来，让明天更聚焦。</span>
+                </button>
+              </div>
+
+              <div class="hint" id="completeHint">先写上学员姓名，再开始今天的三个动作。</div>
+
+              <div class="score-row">
+                <div class="score-box">
+                  <div class="num" id="scoreText">0</div>
+                  <div class="txt">当前积分</div>
+                </div>
+                <div class="score-box">
+                  <div class="num" id="completedDaysText">0</div>
+                  <div class="txt">累计打卡天数</div>
+                </div>
+                <div class="score-box">
+                  <div class="num" id="rewardText">0</div>
+                  <div class="txt">可兑换 1v1 咨询次数<br />100分 = 1次</div>
+                </div>
+              </div>
+
+              <div class="progress-line">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+              <div class="day-cells" id="dayCells"></div>
+
+              <div class="footer-note">
+                <p>今天不是孤立的一天，而是整个 30 天飞轮里的一个齿轮位。围绕一件最重要的小事持续做，飞轮就会持续转起来。</p>
+                <div class="badge" id="footerBadge">NOT STARTED</div>
+              </div>
+            </article>
+          </div>
+
+          <article class="card table-card">
+            <h2 class="title">总体记录总表</h2>
+            <p class="small">这一页给你和管理员看。只要学员在第一页完成当天打卡，这里对应姓名和对应日期的格子就会同步变深。深颜色代表已打卡，白色代表未打卡。</p>
+
+            <div class="summary-row">
+              <div class="summary-box">
+                <div class="num" id="totalStudentsText">0</div>
+                <div class="txt">总学员人数</div>
+              </div>
+              <div class="summary-box">
+                <div class="num" id="totalCheckinsText">0</div>
+                <div class="txt">总打卡次数</div>
+              </div>
+              <div class="summary-box">
+                <div class="num" id="averageDaysText">0</div>
+                <div class="txt">人均打卡天数</div>
+              </div>
+              <div class="summary-box">
+                <div class="num" id="activeStudentText">0</div>
+                <div class="txt">已开始打卡人数</div>
+              </div>
+            </div>
+
+            <div class="legend">
+              <span class="legend-chip"><span class="legend-box done"></span>已打卡</span>
+              <span class="legend-chip"><span class="legend-box empty"></span>未打卡</span>
+              <span>显示规则：姓名 + 累计打卡天数 + Day1 到 Day30。中间不额外显示“漏打”字样，只看深浅就能直观看到情况。</span>
+            </div>
+
+            <div class="table-wrap" id="tableWrap">
+              <div class="empty-state" id="emptyState">还没有学员开始记录。先到第一页填写姓名并完成一次打卡，这里就会自动出现对应记录。</div>
+              <table id="totalTable" hidden>
+                <thead>
+                  <tr id="tableHeadRow">
+                    <th style="width:160px;">姓名</th>
+                    <th style="width:116px;">累计天数</th>
+                  </tr>
+                </thead>
+                <tbody id="totalTableBody"></tbody>
+              </table>
+            </div>
+          </article>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    const STORAGE_KEY = 'practiceCampLinkedBoardV2';
+    const TOTAL_DAYS = 30;
+    const POINTS_PER_DAY = 10;
+    const POINTS_PER_REWARD = 100;
+
+    const defaultToday = () => ({ write: false, shoot: false, review: false });
+    const defaultFlags = () => Array.from({ length: TOTAL_DAYS }, () => false);
+
+    function createStudent(name) {
+      return {
+        name,
+        completedDays: 0,
+        score: 0,
+        today: defaultToday(),
+        completedFlags: defaultFlags(),
+        lastCompletionMessage: ''
+      };
+    }
+
+    function normalizeStudent(raw, fallbackName = '') {
+      const name = (raw?.name || fallbackName || '').trim();
+      const completedFlags = Array.isArray(raw?.completedFlags) ? raw.completedFlags.slice(0, TOTAL_DAYS).map(Boolean) : defaultFlags();
+      while (completedFlags.length < TOTAL_DAYS) completedFlags.push(false);
+      const completedDays = Math.max(0, Math.min(TOTAL_DAYS, Number(raw?.completedDays) || completedFlags.filter(Boolean).length));
+      for (let i = 0; i < TOTAL_DAYS; i++) {
+        completedFlags[i] = i < completedDays;
+      }
+      return {
+        name,
+        completedDays,
+        score: Math.max(0, Number(raw?.score) || completedDays * POINTS_PER_DAY),
+        today: {
+          write: !!raw?.today?.write,
+          shoot: !!raw?.today?.shoot,
+          review: !!raw?.today?.review
+        },
+        completedFlags,
+        lastCompletionMessage: raw?.lastCompletionMessage || ''
+      };
+    }
+
+    function readStoredState() {
+      const keys = ['localStorage', 'sessionStorage'];
+      for (const key of keys) {
+        try {
+          const storage = window[key];
+          if (!storage) continue;
+          const raw = storage.getItem(STORAGE_KEY);
+          if (raw) return raw;
+        } catch {}
+      }
+      try {
+        if (typeof window.name === 'string' && window.name.startsWith(`${STORAGE_KEY}=`)) {
+          return window.name.slice(STORAGE_KEY.length + 1);
+        }
+      } catch {}
+      return '';
+    }
+
+    function writeStoredState(raw) {
+      let saved = false;
+      const keys = ['localStorage', 'sessionStorage'];
+      for (const key of keys) {
+        try {
+          const storage = window[key];
+          if (!storage) continue;
+          storage.setItem(STORAGE_KEY, raw);
+          saved = true;
+        } catch {}
+      }
+      if (!saved) {
+        try {
+          window.name = `${STORAGE_KEY}=${raw}`;
+          saved = true;
+        } catch {}
+      }
+      return saved;
+    }
+
+    function loadState() {
+      try {
+        const raw = readStoredState();
+        if (!raw) {
+          return { currentStudent: '', students: {} };
+        }
+        const parsed = JSON.parse(raw);
+        const students = {};
+        if (parsed.students && typeof parsed.students === 'object') {
+          Object.keys(parsed.students).forEach((name) => {
+            const cleanName = name.trim();
+            if (cleanName) {
+              students[cleanName] = normalizeStudent(parsed.students[name], cleanName);
+            }
+          });
+        }
+        const currentStudent = typeof parsed.currentStudent === 'string' ? parsed.currentStudent.trim() : '';
+        return {
+          currentStudent: students[currentStudent] ? currentStudent : '',
+          students
+        };
+      } catch {
+        return { currentStudent: '', students: {} };
+      }
+    }
+
+    let state = loadState();
+
+    const studentNameInput = document.getElementById('studentNameInput');
+    const saveNameBtn = document.getElementById('saveNameBtn');
+    const currentDayText = document.getElementById('currentDayText');
+    const currentDayDesc = document.getElementById('currentDayDesc');
+    const currentStudentText = document.getElementById('currentStudentText');
+    const currentStudentDesc = document.getElementById('currentStudentDesc');
+    const completeHint = document.getElementById('completeHint');
+    const scoreText = document.getElementById('scoreText');
+    const completedDaysText = document.getElementById('completedDaysText');
+    const rewardText = document.getElementById('rewardText');
+    const progressFill = document.getElementById('progressFill');
+    const dayCells = document.getElementById('dayCells');
+    const footerBadge = document.getElementById('footerBadge');
+    const btnWrite = document.getElementById('btnWrite');
+    const btnShoot = document.getElementById('btnShoot');
+    const btnReview = document.getElementById('btnReview');
+
+    const totalStudentsText = document.getElementById('totalStudentsText');
+    const totalCheckinsText = document.getElementById('totalCheckinsText');
+    const averageDaysText = document.getElementById('averageDaysText');
+    const activeStudentText = document.getElementById('activeStudentText');
+    const totalTable = document.getElementById('totalTable');
+    const totalTableBody = document.getElementById('totalTableBody');
+    const tableHeadRow = document.getElementById('tableHeadRow');
+    const emptyState = document.getElementById('emptyState');
+
+    for (let i = 1; i <= TOTAL_DAYS; i++) {
+      const th = document.createElement('th');
+      th.textContent = `D${i}`;
+      tableHeadRow.appendChild(th);
+    }
+
+    function saveState() {
+      try {
+        return writeStoredState(JSON.stringify(state));
+      } catch {
+        return false;
+      }
+    }
+
+    function getCurrentStudent() {
+      return state.currentStudent ? state.students[state.currentStudent] : null;
+    }
+
+    function currentDay(student) {
+      return Math.min(student.completedDays + 1, TOTAL_DAYS);
+    }
+
+    function stageDescription(day) {
+      if (day <= 10) {
+        return '现在是第一阶段：先围绕一件最重要的小事，把动作做稳。今天的重点不是做很多，而是继续把飞轮转起来。';
+      }
+      if (day <= 20) {
+        return '现在是第二阶段：继续围绕这件小事，用 AI 帮你提速、提炼、复盘，让效率越来越稳。';
+      }
+      return '现在是第三阶段：把这件小事沉淀下来的内容、视频和复盘，慢慢收束成可展示的成果。';
+    }
+
+    function renderButtons(student) {
+      const disabled = !student || student.completedDays >= TOTAL_DAYS;
+      [
+        [btnWrite, student?.today.write, 'write'],
+        [btnShoot, student?.today.shoot, 'shoot'],
+        [btnReview, student?.today.review, 'review']
+      ].forEach(([button, active, cls]) => {
+        button.disabled = !!disabled;
+        button.classList.toggle('active', !!active);
+        button.classList.toggle(cls, true);
+      });
+    }
+
+    function renderDayCells(student) {
+      dayCells.innerHTML = '';
+      if (!student) {
+        for (let i = 1; i <= TOTAL_DAYS; i++) {
+          const cell = document.createElement('div');
+          cell.className = 'day-cell';
+          cell.innerHTML = `<div class="d">Day ${i}</div><div class="s">未开始</div>`;
+          dayCells.appendChild(cell);
+        }
+        return;
+      }
+      const day = currentDay(student);
+      for (let i = 1; i <= TOTAL_DAYS; i++) {
+        const cell = document.createElement('div');
+        cell.className = 'day-cell';
+        if (student.completedFlags[i - 1]) cell.classList.add('done');
+        if (i === day && student.completedDays < TOTAL_DAYS) cell.classList.add('current');
+        const label = student.completedFlags[i - 1]
+          ? '已完成'
+          : (i === day && student.completedDays < TOTAL_DAYS ? '进行中' : '待完成');
+        cell.innerHTML = `<div class="d">Day ${i}</div><div class="s">${label}</div>`;
+        dayCells.appendChild(cell);
+      }
+    }
+
+    function updateHint(student) {
+      if (!student) {
+        completeHint.textContent = '先写上学员姓名，再开始今天的三个动作。';
+        return;
+      }
+      if (student.completedDays >= TOTAL_DAYS) {
+        completeHint.textContent = '这位学员已经走完全部 30 天。后面如果要开新一期，可以重置后再开始。';
+        return;
+      }
+      if (student.lastCompletionMessage) {
+        completeHint.textContent = student.lastCompletionMessage;
+        return;
+      }
+      const doneCount = [student.today.write, student.today.shoot, student.today.review].filter(Boolean).length;
+      completeHint.textContent = `今天还差 ${3 - doneCount} 项。只有三项都完成，总表上今天对应的格子才会同步点亮。`;
+    }
+
+    function renderRecordPage() {
+      const student = getCurrentStudent();
+      studentNameInput.value = state.currentStudent || '';
+      renderButtons(student);
+      renderDayCells(student);
+      updateHint(student);
+
+      if (!student) {
+        currentDayText.textContent = '请先填写姓名';
+        currentDayDesc.textContent = '姓名确定后，这里会显示这位学员当前进行到第几天。';
+        currentStudentText.textContent = '未选择';
+        currentStudentDesc.textContent = '当前没有锁定学员姓名。先输入姓名，个人记录页和总表页才能联动。';
+        scoreText.textContent = '0';
+        completedDaysText.textContent = '0';
+        rewardText.textContent = '0';
+        progressFill.style.width = '0%';
+        footerBadge.textContent = 'NOT STARTED';
+        return;
+      }
+
+      const day = currentDay(student);
+      currentDayText.textContent = student.completedDays >= TOTAL_DAYS ? '30天已完成' : `Day ${day} 进行中`;
+      currentDayDesc.textContent = stageDescription(day);
+      currentStudentText.textContent = student.name;
+      currentStudentDesc.textContent = student.completedDays >= TOTAL_DAYS
+        ? '这位学员已经完成全部 30 天。'
+        : `当前正在推进 Day ${day}。围绕一件小事，把今天的三项动作都做完。`;
+      scoreText.textContent = student.score;
+      completedDaysText.textContent = student.completedDays;
+      rewardText.textContent = Math.floor(student.score / POINTS_PER_REWARD);
+      progressFill.style.width = `${(student.completedDays / TOTAL_DAYS) * 100}%`;
+      footerBadge.textContent = student.completedDays >= TOTAL_DAYS ? '30 DAYS DONE' : `DAY ${day} IN PROGRESS`;
+    }
+
+    function renderTotalPage() {
+      const students = Object.values(state.students).sort((a, b) => {
+        if (b.completedDays !== a.completedDays) return b.completedDays - a.completedDays;
+        return a.name.localeCompare(b.name, 'zh-CN');
+      });
+
+      const totalStudents = students.length;
+      const totalCheckins = students.reduce((sum, student) => sum + student.completedDays, 0);
+      const activeStudents = students.filter((student) => student.completedDays > 0).length;
+      const average = totalStudents ? (totalCheckins / totalStudents).toFixed(1) : '0';
+
+      totalStudentsText.textContent = totalStudents;
+      totalCheckinsText.textContent = totalCheckins;
+      averageDaysText.textContent = average;
+      activeStudentText.textContent = activeStudents;
+
+      totalTableBody.innerHTML = '';
+
+      if (!students.length) {
+        totalTable.hidden = true;
+        emptyState.hidden = false;
+        return;
+      }
+
+      emptyState.hidden = true;
+      totalTable.hidden = false;
+
+      students.forEach((student) => {
+        const tr = document.createElement('tr');
+        const nameTd = document.createElement('td');
+        nameTd.className = 'name-cell';
+        nameTd.textContent = student.name;
+        tr.appendChild(nameTd);
+
+        const countTd = document.createElement('td');
+        countTd.className = 'count-cell';
+        countTd.textContent = `${student.completedDays}天`;
+        tr.appendChild(countTd);
+
+        for (let i = 0; i < TOTAL_DAYS; i++) {
+          const td = document.createElement('td');
+          const box = document.createElement('div');
+          box.className = 'table-day';
+          if (student.completedFlags[i]) box.classList.add('done');
+          td.appendChild(box);
+          tr.appendChild(td);
+        }
+        totalTableBody.appendChild(tr);
+      });
+    }
+
+    function renderAll() {
+      renderRecordPage();
+      renderTotalPage();
+    }
+
+    function ensureStudent(name) {
+      const cleanName = name.trim();
+      if (!cleanName) return null;
+      if (!state.students[cleanName]) {
+        state.students[cleanName] = createStudent(cleanName);
+      } else {
+        state.students[cleanName] = normalizeStudent(state.students[cleanName], cleanName);
+      }
+      state.currentStudent = cleanName;
+      saveState();
+      return state.students[cleanName];
+    }
+
+    function tryCompleteDay(student) {
+      if (!student || student.completedDays >= TOTAL_DAYS) return;
+      if (student.today.write && student.today.shoot && student.today.review) {
+        const finishedDay = student.completedDays + 1;
+        student.completedFlags[student.completedDays] = true;
+        student.completedDays += 1;
+        student.score += POINTS_PER_DAY;
+        student.today = defaultToday();
+        if (student.completedDays >= TOTAL_DAYS) {
+          student.lastCompletionMessage = `恭喜，${student.name} 刚刚完成了 Day ${finishedDay}，获得 10 积分，并且走完了全部 30 天。`;
+        } else {
+          student.lastCompletionMessage = `恭喜，${student.name} 刚刚完成了 Day ${finishedDay}，获得 10 积分。当前已进入 Day ${student.completedDays + 1} 进行中。`;
+        }
+      }
+    }
+
+    function toggleTask(key) {
+      const student = getCurrentStudent();
+      if (!student || student.completedDays >= TOTAL_DAYS) return;
+      student.lastCompletionMessage = '';
+      student.today[key] = !student.today[key];
+      tryCompleteDay(student);
+      saveState();
+      renderAll();
+    }
+
+    function activateStudent() {
+      const name = studentNameInput.value.trim();
+      if (!name) {
+        studentNameInput.focus();
+        return;
+      }
+      ensureStudent(name);
+      saveState();
+      renderAll();
+    }
+
+    saveNameBtn.addEventListener('click', activateStudent);
+    studentNameInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        activateStudent();
+      }
+    });
+
+    btnWrite.addEventListener('click', () => toggleTask('write'));
+    btnShoot.addEventListener('click', () => toggleTask('shoot'));
+    btnReview.addEventListener('click', () => toggleTask('review'));
+
+    renderAll();
+  </script>
+</body>
+</html>
