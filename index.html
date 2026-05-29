@@ -355,6 +355,21 @@
       transition: all .18s ease;
     }
 
+    .task-btn.write {
+      background: linear-gradient(180deg, #ffffff, #f3fbf5);
+      border-color: rgba(77, 167, 104, 0.18);
+    }
+
+    .task-btn.shoot {
+      background: linear-gradient(180deg, #ffffff, #f2f7ff);
+      border-color: rgba(47, 115, 226, 0.18);
+    }
+
+    .task-btn.review {
+      background: linear-gradient(180deg, #ffffff, #fff6ed);
+      border-color: rgba(221, 136, 43, 0.18);
+    }
+
     .task-btn:disabled {
       cursor: not-allowed;
       opacity: 0.52;
@@ -387,6 +402,68 @@
       line-height: 1.65;
       color: inherit;
       opacity: 0.94;
+    }
+
+    .task-btn-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 14px;
+    }
+
+    .click-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      color: #fff;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.24), 0 8px 18px rgba(36, 53, 74, 0.12);
+    }
+
+    .task-btn.write .click-pill {
+      background: linear-gradient(180deg, #67bf7b, #469d5a);
+    }
+
+    .task-btn.shoot .click-pill {
+      background: linear-gradient(180deg, #5b98ff, #2f73e2);
+    }
+
+    .task-btn.review .click-pill {
+      background: linear-gradient(180deg, #f2a04c, #d98024);
+    }
+
+    .press-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: inset 0 1px 0 rgba(255,255,255,0.55), 0 10px 18px rgba(28, 44, 64, 0.12);
+      border: 1px solid rgba(255,255,255,0.65);
+      flex: 0 0 auto;
+    }
+
+    .task-btn.write .press-icon {
+      background: linear-gradient(180deg, #dff5e5, #bfe7c9);
+    }
+
+    .task-btn.shoot .press-icon {
+      background: linear-gradient(180deg, #deebff, #bfd5ff);
+    }
+
+    .task-btn.review .press-icon {
+      background: linear-gradient(180deg, #ffedd9, #ffd4a7);
+    }
+
+    .press-icon svg {
+      width: 22px;
+      height: 22px;
     }
 
     .hint {
@@ -842,14 +919,42 @@
 
               <div class="button-grid">
                 <button class="task-btn write" id="btnWrite" type="button" disabled>
+                  <div class="task-btn-top">
+                    <span class="click-pill">点击</span>
+                    <span class="press-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 3L13.8 8.2L19 10L13.8 11.8L12 17L10.2 11.8L5 10L10.2 8.2L12 3Z" fill="#2F7A45"/>
+                      </svg>
+                    </span>
+                  </div>
                   <strong>每天写点什么</strong>
                   <span>把今天围绕的小事写下来，留下文字痕迹。</span>
                 </button>
                 <button class="task-btn shoot" id="btnShoot" type="button" disabled>
+                  <div class="task-btn-top">
+                    <span class="click-pill">点击</span>
+                    <span class="press-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M7 8H17C18.1046 8 19 8.89543 19 10V15C19 16.1046 18.1046 17 17 17H7C5.89543 17 5 16.1046 5 15V10C5 8.89543 5.89543 8 7 8Z" fill="#2F73E2"/>
+                        <path d="M11 10.5L14.5 12.5L11 14.5V10.5Z" fill="white"/>
+                        <path d="M9 6L10 4.8H14L15 6" stroke="#2F73E2" stroke-width="1.8" stroke-linecap="round"/>
+                      </svg>
+                    </span>
+                  </div>
                   <strong>每天拍点什么</strong>
                   <span>把行动过程记录下来，让成长看得见。</span>
                 </button>
                 <button class="task-btn review" id="btnReview" type="button" disabled>
+                  <div class="task-btn-top">
+                    <span class="click-pill">点击</span>
+                    <span class="press-icon" aria-hidden="true">
+                      <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 5C8.68629 5 6 7.68629 6 11C6 14.3137 8.68629 17 12 17C15.3137 17 18 14.3137 18 11" stroke="#D98024" stroke-width="2" stroke-linecap="round"/>
+                        <path d="M12 8V11L14.5 12.5" stroke="#D98024" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M15 4H19V8" stroke="#D98024" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                      </svg>
+                    </span>
+                  </div>
                   <strong>每天复盘总结</strong>
                   <span>把今天的经验提炼出来，让明天更聚焦。</span>
                 </button>
